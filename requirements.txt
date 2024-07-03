@@ -1,0 +1,11 @@
+file:///Users/shurrey/local/langchain/libs/core
+file:///Users/shurrey/local/langchain/libs/community
+file:///Users/shurrey/local/langchain/libs/text-splitters
+file:///Users/shurrey/local/langchain/libs/langchain
+box-sdk-gen
+box-sdk-gen[JWT]
+openai
+chromadb
+langchain-openai
+tiktoken
+python-dotenv
