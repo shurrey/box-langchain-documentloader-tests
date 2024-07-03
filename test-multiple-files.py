@@ -9,7 +9,7 @@ load_dotenv("config/.token.env")
 load_dotenv("config/.box.env")
 
 box_developer_token=os.getenv("BOX_DEVELOPER_TOKEN")
-box_file_ids=[os.getenv("BOX_FIRST_FILE"),os.getenv("BOX_FIRST_FILE")]
+box_file_ids=[os.getenv("BOX_FIRST_FILE"),os.getenv("BOX_SECOND_FILE")]
 
 prompt="YOUR_PROMPT"
 

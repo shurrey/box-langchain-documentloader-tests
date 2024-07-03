@@ -11,9 +11,7 @@ load_dotenv("config/.box.env")
 box_developer_token=os.getenv("BOX_DEVELOPER_TOKEN")
 box_file_ids=[os.getenv("BOX_FIRST_FILE")]
 
-print(f"box_developer_token {box_developer_token} box_file_ids {box_file_ids}")
-
-prompt="YOUR_PROMPT"
+prompt="Show me all of victor's lines"
 
 loader = BoxLoader( 
     mode=Mode.FILES,
