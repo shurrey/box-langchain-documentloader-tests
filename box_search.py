@@ -1,17 +1,12 @@
+import bs4
 import os
-
-from langchain_community.llms import OpenAI
-
+from langchain import hub
 from langchain_community.vectorstores import Chroma
-from langchain_community.vectorstores import utils as chromautils
-
-from langchain.retrievers import ContextualCompressionRetriever
-from langchain.retrievers.document_compressors import LLMChainExtractor
-
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-
-from langchain_openai import ChatOpenAI
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
 from langchain_openai import OpenAIEmbeddings
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_openai import ChatOpenAI
 
 from dotenv import load_dotenv
 
@@ -23,22 +18,22 @@ class BoxSearch:
         self.db = None
         self.compressor = None
         self.compression_retriever = None
+        self.llm = ChatOpenAI(model="gpt-3.5-turbo-0125")
+        self.prompt = None
         self.is_trained = False
 
-    def train_ai(self, documents):
+    def format_docs(self,docs):
+        return "\n\n".join(doc.page_content for doc in docs)
+    
+    def train_ai(self, docs):
 
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=50)
-        text_chunks = text_splitter.split_documents(documents)
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+        splits = text_splitter.split_documents(docs)
+        self.db = Chroma.from_documents(documents=splits, embedding=OpenAIEmbeddings())
 
-        embeddings = OpenAIEmbeddings(openai_api_key=self.openai_key)
-
-        filter_chunks = chromautils.filter_complex_metadata(text_chunks)
-        self.db = Chroma.from_documents(filter_chunks, embeddings, persist_directory='./chroma_db')
-
-        llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, openai_api_key=self.openai_key)
-        self.compressor = LLMChainExtractor.from_llm(llm)
-        self.compression_retriever = ContextualCompressionRetriever(base_compressor=self.compressor,
-                                                                    base_retriever=self.db.as_retriever())
+        # Retrieve and generate using the relevant snippets of the blog.
+        self.retriever = self.db.as_retriever()
+        self.prompt = hub.pull("rlm/rag-prompt")
         
         self.is_trained = True
         
@@ -47,9 +42,13 @@ class BoxSearch:
         if not self.is_trained:
             raise Exception("AI Model is not trained. Please run train_ai first.")
         
-        compressed_docs = self.compression_retriever.invoke(question)
+        rag_chain = (
+            {"context": self.retriever | self.format_docs, "question": RunnablePassthrough()}
+            | self.prompt
+            | self.llm
+            | StrOutputParser()
+        )
 
-        if compressed_docs:
-            return compressed_docs[0].page_content
-        else:
-            return f"No relevant documents found for {question}"
+        answer = rag_chain.invoke(question)
+
+        return answer
