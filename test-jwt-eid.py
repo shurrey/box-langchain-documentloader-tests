@@ -1,7 +1,8 @@
 import os
 from dotenv import load_dotenv
 
-from langchain_community.document_loaders.box import BoxLoader, Mode, AuthType
+from langchain_community.document_loaders.box import BoxLoader, Mode
+from langchain_community.utilities.box import BoxAuthType
 
 from box_search import BoxSearch
 
@@ -15,7 +16,7 @@ prompt="YOUR_PROMPT"
 
 loader = BoxLoader(
     mode=Mode.FOLDER,
-    auth_type=AuthType.JWT,
+    auth_type=BoxAuthType.JWT,
     box_jwt_path=box_jwt_path,
     box_folder_id=box_folder_id
 )

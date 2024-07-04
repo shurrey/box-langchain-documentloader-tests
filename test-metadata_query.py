@@ -10,17 +10,25 @@ load_dotenv("config/.token.env")
 load_dotenv("config/.box.env")
 
 box_developer_token=os.getenv("BOX_DEVELOPER_TOKEN")
-box_file_ids=[os.getenv("BOX_FIRST_FILE")]
+box_metadata_template=os.getenv("BOX_METADATA_TEMPLATE")
+box_metadata_query=os.getenv("BOX_METADATA_QUERY")
+box_metadata_params=os.getenv("BOX_METADATA_PARAMS")
+box_enterprise_id=os.getenv("BOX_ENTERPRISE_ID")
 
-prompt="Show me all of victor's lines"
+prompt="show me what was purchased"
 
 loader = BoxLoader( 
-    mode=Mode.FILES,
+    mode=Mode.METADATA_QUERY,
     auth_type=BoxAuthType.TOKEN,
     box_developer_token=box_developer_token,
-    box_file_ids=box_file_ids
+    box_metadata_query=box_metadata_query,
+    box_metadata_template=box_metadata_template,
+    box_metadata_params=box_metadata_params,
+    box_enterprise_id=box_enterprise_id
 )
 documents = loader.load()
+
+print(f"documents = {documents}")
 
 box = BoxSearch()
 

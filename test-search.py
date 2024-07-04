@@ -10,21 +10,23 @@ load_dotenv("config/.token.env")
 load_dotenv("config/.box.env")
 
 box_developer_token=os.getenv("BOX_DEVELOPER_TOKEN")
-box_folder_id = os.getenv("BOX_FOLDER_ID")
+box_search_query=os.getenv("BOX_SEARCH_QUERY")
 
-prompt="YOUR_PROMPT"
+prompt="Show me all of victor's lines"
 
-loader = BoxLoader(
-    mode=Mode.FOLDER,
+loader = BoxLoader( 
+    mode=Mode.SEARCH,
     auth_type=BoxAuthType.TOKEN,
     box_developer_token=box_developer_token,
-    box_folder_id=box_folder_id
+    box_search_query=box_search_query
 )
-docs = loader.load()
+documents = loader.load()
+
+print(f"documents = {documents}")
 
 box = BoxSearch()
 
-box.train_ai(docs)
+box.train_ai(documents)
 answer = box.box_search(prompt)
 
 print(answer)
