@@ -12,7 +12,7 @@ load_dotenv("config/.box.env")
 box_developer_token=os.getenv("BOX_DEVELOPER_TOKEN")
 box_folder_id = os.getenv("BOX_FOLDER_ID")
 
-prompt="YOUR_PROMPT"
+prompt="Summarize the scripts in this folder"
 
 loader = BoxLoader(
     mode=Mode.FOLDER,

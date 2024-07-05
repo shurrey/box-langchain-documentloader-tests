@@ -11,3 +11,7 @@ tiktoken
 python-dotenv
 bs4
 langchainhub
+langgraph
+jupyterlab
+notebook
+voila

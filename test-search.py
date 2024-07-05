@@ -12,7 +12,7 @@ load_dotenv("config/.box.env")
 box_developer_token=os.getenv("BOX_DEVELOPER_TOKEN")
 box_search_query=os.getenv("BOX_SEARCH_QUERY")
 
-prompt="Show me all of victor's lines"
+prompt="Summarize Five feet and rising"
 
 loader = BoxLoader( 
     mode=Mode.SEARCH,
@@ -22,7 +22,7 @@ loader = BoxLoader(
 )
 documents = loader.load()
 
-print(f"documents = {documents}")
+#print(f"documents = {documents}")
 
 box = BoxSearch()
 
