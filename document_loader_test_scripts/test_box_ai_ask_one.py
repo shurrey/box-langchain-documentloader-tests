@@ -6,8 +6,8 @@ from langchain_community.utilities.box import BoxAuthType
 
 from box_search import BoxSearch
 
-load_dotenv("config/.token.env")
-load_dotenv("config/.box.env")
+load_dotenv("../config/.token.env")
+load_dotenv("../config/.box.env")
 
 box_developer_token=os.getenv("BOX_DEVELOPER_TOKEN")
 box_file_ids = [os.getenv("BOX_FIRST_FILE")]

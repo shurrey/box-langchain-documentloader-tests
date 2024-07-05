@@ -12,8 +12,8 @@ from box_sdk_gen import (
     CreateCollaborationRole
 )
 
-load_dotenv("config/.ccg.env")
-load_dotenv("config/.box.env")
+load_dotenv("../config/.ccg.env")
+load_dotenv("../config/.box.env")
 
 box_client_id=os.getenv("BOX_CLIENT_ID")
 box_client_secret=os.getenv("BOX_CLIENT_SECRET")

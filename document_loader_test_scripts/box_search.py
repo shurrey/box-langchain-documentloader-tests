@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 class BoxSearch:
     def __init__(self):
-        load_dotenv("config/.openai.env")
+        load_dotenv("../config/.openai.env")
 
         self.openai_key = os.getenv("OPENAI_API_KEY")
         self.db = None

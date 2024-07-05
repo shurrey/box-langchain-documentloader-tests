@@ -6,25 +6,27 @@ from langchain_community.utilities.box import BoxAuthType
 
 from box_search import BoxSearch
 
-load_dotenv("config/.token.env")
-load_dotenv("config/.box.env")
+load_dotenv("../config/.token.env")
+load_dotenv("../config/.box.env")
 
 box_developer_token=os.getenv("BOX_DEVELOPER_TOKEN")
-box_file_ids=[os.getenv("BOX_FIRST_FILE"),os.getenv("BOX_SECOND_FILE")]
+box_search_query=os.getenv("BOX_SEARCH_QUERY")
 
-prompt="prompt"
+prompt="Summarize Five feet and rising"
 
-loader = BoxLoader(
-    mode=Mode.FILES,
+loader = BoxLoader( 
+    mode=Mode.SEARCH,
     auth_type=BoxAuthType.TOKEN,
     box_developer_token=box_developer_token,
-    box_file_ids=box_file_ids
+    box_search_query=box_search_query
 )
-docs = loader.load()
+documents = loader.load()
+
+#print(f"documents = {documents}")
 
 box = BoxSearch()
 
-box.train_ai(docs)
+box.train_ai(documents)
 answer = box.box_search(prompt)
 
 print(answer)
