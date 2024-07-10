@@ -1,16 +1,20 @@
 # Box Langchain DocumentLoader Test
 
 This repo contains DocumentLoader tests in a number of scenarios using the developer token authentication method. 
-* [Single file](test-one-file.py)
-* [Multiple files](test-multiple-files.py)
-* [All files in a folder](test-folder.py)
+* [Single file](document_loader_test_scripts/test_one_-_file.py)
+* [Multiple files](document_loader_test_scripts/test_multiple_files.py)
+* [All files in a folder](document_loader_test_scripts/test_folder.py)
 
 It also enables tests for mutiple authentication methods:
-* [Developer token](test-folder.py) - used by the above tests
-* [JWT with service account](test-jwt-eid.py) - tests with a folder
-* [JWT as user](test-jwt-user.py) - tests with a folder
-* [Client credentials grant with service account](test-ccg-eid.py) - tests with a folder
-* [Client credentials grant as user](test-ccg-user.py) - tests with a folder
+* [Developer token](document_loader_test_scripts/test_folder.py) - used by the above tests
+* [JWT with service account](document_loader_test_scripts/test_jwt_eid.py) - tests with a folder
+* [JWT as user](document_loader_test_scripts/test_jwt_user.py) - tests with a folder
+* [Client credentials grant with service account](document_loader_test_scripts/test_ccg_eid.py) - tests with a folder
+* [Client credentials grant as user](document_loader_test_scripts/test_ccg_user.py) - tests with a folder
+
+Finally, it provides both a Jupyter notebook and a script for testing the Box File Search Tool as part of a LangGraph agent.
+* [Jupyter notebook](Test%20BoxFileSearchTool.ipynb) - to run locally, you must [install Jupyter notebooks](https://jupyter.org/install).
+* [Test script](tool_test_scripts)/test_box_filesearch_tool.py
 
 > [!IMPORTANT]  
 > Until we merge the Box DocumentLoader with langchain, you will need to clone the langchain fork [here](https://github.com/shurrey/langchain) and run it locally to test.
@@ -18,10 +22,10 @@ It also enables tests for mutiple authentication methods:
 ## Prepare langchain repo for use locally
 To prepare the langchain fork for use locally, you will need to follow these steps. These steps assume you have git and python installed and available at the commandline.
 
-1. In your directory of choosing in the command prompt or terminal on your local machine, run `git clone https://github.com/shurrey/langchain.git`.
-2. Navigate to the langchain code package, by running `cd langchain/langchain/libs/core`
+1. In your directory of choosing in the command prompt or terminal on your local machine, run `git clone https://github.com/box-community/langchain.git`.
+2. Navigate to the langchain code package, by running `cd langchain/libs/core`
 3. Install all dependencies by running `pip install -e .`
-4. Navigate to the langchain experimentl package, by running `cd ../langchain`
+4. Navigate to the langchain package, by running `cd ../langchain`
 5. Install all dependencies by running `pip install -e .`
 6. Navigate to the langchain text-splitters package, by running `cd ../text-splitters`
 7. Install all dependencies by running `pip install -e .`

@@ -25,10 +25,6 @@ tools = [box_search_tool]
 
 model = ChatOpenAI(model="gpt-4")
 
-model.max_tokens = 900
-
-model_with_tools = model.bind_tools(tools)
-
 agent_executor = create_react_agent(model, tools)
 
 for chunk in agent_executor.stream(
