@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
 
-from langchain_community.document_loaders.box import BoxLoader, Mode
-from langchain_community.utilities.box import BoxAuthType
+from langchain_box.document_loaders import BoxSearchLoader
+from langchain_box.utilities import BoxAuthType
 
 from box_search import BoxSearch
 
@@ -14,8 +14,7 @@ box_search_query=os.getenv("BOX_SEARCH_QUERY")
 
 prompt="Summarize Five feet and rising"
 
-loader = BoxLoader( 
-    mode=Mode.SEARCH,
+loader = BoxSearchLoader( 
     auth_type=BoxAuthType.TOKEN,
     box_developer_token=box_developer_token,
     box_search_query=box_search_query

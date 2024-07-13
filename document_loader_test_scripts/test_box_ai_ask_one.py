@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
 
-from langchain_community.document_loaders.box import BoxLoader, Mode
-from langchain_community.utilities.box import BoxAuthType
+from langchain_box.document_loaders import BoxAILoader, BoxAIMode
+from langchain_box.utilities import BoxAuthType
 
 from box_search import BoxSearch
 
@@ -13,10 +13,12 @@ box_developer_token=os.getenv("BOX_DEVELOPER_TOKEN")
 box_file_ids = [os.getenv("BOX_FIRST_FILE")]
 box_ai_prompt=os.getenv("BOX_AI_PROMPT")
 
-prompt="Show me all of victor's lines"
+prompt="List all the props"
 
-loader = BoxLoader( 
-    mode=Mode.BOX_AI_ASK,
+print(f"token {box_developer_token} files {box_file_ids} prompt {box_ai_prompt}")
+
+loader = BoxAILoader( 
+    mode=BoxAIMode.ASK,
     auth_type=BoxAuthType.TOKEN,
     box_developer_token=box_developer_token,
     box_file_ids=box_file_ids,

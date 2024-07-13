@@ -32,7 +32,7 @@ class BoxSearch:
         self.db = Chroma.from_documents(documents=splits, embedding=OpenAIEmbeddings())
 
         # Retrieve and generate using the relevant snippets of the blog.
-        self.retriever = self.db.as_retriever()
+        self.retriever = self.db.as_retriever(search_kwargs={"k": 1})
         self.prompt = hub.pull("rlm/rag-prompt")
         
         self.is_trained = True

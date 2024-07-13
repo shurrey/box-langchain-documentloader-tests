@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
 
-from langchain_community.document_loaders.box import BoxLoader, Mode
-from langchain_community.utilities.box import BoxAuthType
+from langchain_box.document_loaders import BoxFileLoader
+from langchain_box.utilities.box_auth import BoxAuthType
 
 from box_search import BoxSearch
 
@@ -12,10 +12,9 @@ load_dotenv("../config/.box.env")
 box_developer_token=os.getenv("BOX_DEVELOPER_TOKEN")
 box_file_ids=[os.getenv("BOX_FIRST_FILE")]
 
-prompt="Show me all of victor's lines"
+prompt="Summarize these documents"
 
-loader = BoxLoader( 
-    mode=Mode.FILES,
+loader = BoxFileLoader( 
     auth_type=BoxAuthType.TOKEN,
     box_developer_token=box_developer_token,
     box_file_ids=box_file_ids

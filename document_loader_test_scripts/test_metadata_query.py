@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
 
-from langchain_community.document_loaders.box import BoxLoader, Mode
-from langchain_community.utilities.box import BoxAuthType
+from langchain_box.document_loaders import BoxMetadataQueryLoader
+from langchain_box.utilities.box_auth import BoxAuthType
 
 from box_search import BoxSearch
 
@@ -17,8 +17,7 @@ box_enterprise_id=os.getenv("BOX_ENTERPRISE_ID")
 
 prompt="show me what was purchased"
 
-loader = BoxLoader( 
-    mode=Mode.METADATA_QUERY,
+loader = BoxMetadataQueryLoader( 
     auth_type=BoxAuthType.TOKEN,
     box_developer_token=box_developer_token,
     box_metadata_query=box_metadata_query,
