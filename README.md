@@ -4,17 +4,15 @@ This repo contains DocumentLoader tests in a number of scenarios using the devel
 * [Single file](document_loader_test_scripts/test_one_-_file.py)
 * [Multiple files](document_loader_test_scripts/test_multiple_files.py)
 * [All files in a folder](document_loader_test_scripts/test_folder.py)
+* [All files in a folder recursively](document_loader_test_scripts/test_folder_recursive.py)
 
 It also enables tests for mutiple authentication methods:
-* [Developer token](document_loader_test_scripts/test_folder.py) - used by the above tests
-* [JWT with service account](document_loader_test_scripts/test_jwt_eid.py) - tests with a folder
-* [JWT as user](document_loader_test_scripts/test_jwt_user.py) - tests with a folder
-* [Client credentials grant with service account](document_loader_test_scripts/test_ccg_eid.py) - tests with a folder
-* [Client credentials grant as user](document_loader_test_scripts/test_ccg_user.py) - tests with a folder
+* [Developer token](auth_test_scripts/test_token.py)
+* [JWT with service account](auth_test_scripts/test_jwt_eid.py)
+* [JWT as user](auth_test_scripts/test_jwt_user.py)
+* [Client credentials grant with service account](auth_test_scripts/test_ccg_eid.py)
+* [Client credentials grant as user](auth_test_scripts/test_ccg_user.py)
 
-Finally, it provides both a Jupyter notebook and a script for testing the Box File Search Tool as part of a LangGraph agent.
-* [Jupyter notebook](Test%20BoxFileSearchTool.ipynb) - to run locally, you must [install Jupyter notebooks](https://jupyter.org/install).
-* [Test script](tool_test_scripts)/test_box_filesearch_tool.py
 
 > [!IMPORTANT]  
 > Until we merge the Box DocumentLoader with langchain, you will need to clone the langchain fork [here](https://github.com/shurrey/langchain) and run it locally to test.
@@ -23,15 +21,7 @@ Finally, it provides both a Jupyter notebook and a script for testing the Box Fi
 To prepare the langchain fork for use locally, you will need to follow these steps. These steps assume you have git and python installed and available at the commandline.
 
 1. In your directory of choosing in the command prompt or terminal on your local machine, run `git clone https://github.com/box-community/langchain.git`.
-2. Navigate to the langchain code package, by running `cd langchain/libs/core`
-3. Install all dependencies by running `pip install -e .`
-4. Navigate to the langchain package, by running `cd ../langchain`
-5. Install all dependencies by running `pip install -e .`
-6. Navigate to the langchain text-splitters package, by running `cd ../text-splitters`
-7. Install all dependencies by running `pip install -e .`
-Navigate to the langchain community package, by running `cd ../community`
-8. Install all dependencies by running `pip install -e .`
-9. Make note of the path. It will be something like `/Users/shurrey/local/langchain/libs/community`. You will need this as we set up these tests.
+2. Make note of the path. It will be something like `/Users/shurrey/local/langchain/libs/community`. You will need this as we set up these tests.
 
 ## Prepare the test suite for use
 
@@ -64,4 +54,4 @@ OK, assuming you have completed the steps above to get the langchain fork instal
 7. Now you can install your dependencies at the commandline in the root directory of this application by running `pip install -r requirements.txt`.
 5. You should now be all set to run the tests. Each test has a variable called `prompt`, which you can set based on the file(s) or folder you choose. It will be asked to OpenAI, so you will get a real answer based on the file(s) you provide. 
 
-To run the tests, you can either use the tools provided by your development environment, or from the command line, run `python TEST_NAME.py` where TEST_NAME is the file name of the test you wish to run. For example, to test one file, you can run `python test-one-file.py`.
+To run the tests, you can either use the tools provided by your development environment, or from the command line, run `python TEST_NAME.py` where TEST_NAME is the file name of the test you wish to run. For example, to test one file, you can change to the appropriate directory like `cd document_loader_test_scripts` and then run `python test_one_-_file.py`.
