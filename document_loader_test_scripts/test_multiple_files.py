@@ -1,8 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from langchain_box.document_loaders import BoxFileLoader
-from langchain_box.utilities.box_auth import BoxAuthType
+from langchain_box.document_loaders import BoxLoader
 
 from box_search import BoxSearch
 
@@ -14,12 +13,11 @@ box_file_ids=[os.getenv("BOX_FIRST_FILE"),os.getenv("BOX_SECOND_FILE")]
 
 prompt="summarize these documents"
 
-loader = BoxFileLoader(
-    auth_type=BoxAuthType.TOKEN,
+loader = BoxLoader(
     box_developer_token=box_developer_token,
     box_file_ids=box_file_ids
 )
-docs = loader.load()
+docs = loader.lazy_load()
 
 box = BoxSearch()
 

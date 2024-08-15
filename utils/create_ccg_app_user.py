@@ -30,7 +30,7 @@ try:
     auth = BoxCCGAuth(config=ccg_config)
     box = BoxClient(auth=auth)
 
-    user = box.users.create_user("langchain-test", is_platform_access_only=True)
+    user = box.users.create_user("langchain-integration-test", is_platform_access_only=True)
 
     print(f"User: {user}")
 
