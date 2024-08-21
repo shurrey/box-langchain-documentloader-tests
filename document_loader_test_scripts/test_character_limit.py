@@ -9,21 +9,16 @@ load_dotenv("../config/.token.env")
 load_dotenv("../config/.box.env")
 
 box_developer_token=os.getenv("BOX_DEVELOPER_TOKEN")
-box_folder_id = "0"
+box_file_ids=[os.getenv("BOX_FIRST_FILE")]
 
-prompt="list all Victor's lines"
+prompt="Summarize these documents"
 
-loader = BoxLoader(
+loader = BoxLoader( 
     box_developer_token=box_developer_token,
-    box_folder_id=box_folder_id,
-    recursive=True
+    box_file_ids=box_file_ids,
+    character_limit=10
 )
-docs = loader.lazy_load()
 
-print(f"docs {docs}")
-box = BoxSearch()
+documents = loader.lazy_load()
 
-box.train_ai(docs)
-answer = box.box_search(prompt)
-
-print(answer)
+print(f"documents {list(documents)}")
