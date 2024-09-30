@@ -5,42 +5,61 @@ from box_sdk_gen import (
     BoxClient,
     BoxAPIError,
     BoxSDKError,
-    BoxDeveloperTokenAuth,
+    CCGConfig,
+    BoxCCGAuth,
+    CreateAiAskMode,
+    AiItemBase,
+    AiItemBaseTypeField,
     FileBaseTypeField
 )
 
-load_dotenv("config/.token.env")
+load_dotenv("config/.ccg.env")
 load_dotenv("config/.box.env")
 
-box_developer_token=os.getenv("BOX_DEVELOPER_TOKEN")
-box_folder_id = os.getenv("BOX_FOLDER_ID")
+box_client_id=os.getenv("BOX_CLIENT_ID")
+box_client_secret=os.getenv("BOX_CLIENT_SECRET")
+box_user_id = os.getenv("BOX_USER_ID")
+box_file_id = os.getenv("BOX_FIRST_FILE")
 
-try:
-    auth = BoxDeveloperTokenAuth(token=box_developer_token)
-    box = BoxClient(auth=auth)
 
-    print("call sdk")
-    folder_contents = box.folders.get_folder_items(
-        box_folder_id, fields=["id", "type"]
-    )
 
-    print(f"folder_content {folder_contents}")
-    for file in folder_contents.entries:
-        print(f"file {file} file.type {file.type} file.type.value() {file.type.value()}")
+ccg_config = CCGConfig(
+    client_id=box_client_id,
+    client_secret=box_client_secret,
+    user_id=box_user_id,
+)
+auth = BoxCCGAuth(config=ccg_config)
 
-        print(f"file.type == FileBaseTypeField.FILE {file.type == FileBaseTypeField.FILE}")
+box = BoxClient(auth=auth)
 
-except BoxAPIError as bae:
-    raise RuntimeError(
-        f"BoxAPIError: Error getting folder content: {bae.message}"
-    )
-except BoxSDKError as bse:
-    raise RuntimeError(
-        f"BoxSDKError: Error getting folder content: {bse.message}"
-    )
-except Exception as e:
-    raise RuntimeError(
-        f"Exception: Error getting folder content: {e}"
-    )
+ai_mode = CreateAiAskMode.SINGLE_ITEM_QA.value
 
-print("return")
+items = []
+
+item = AiItemBase(
+            id="1594603535740",
+            type=AiItemBaseTypeField.FILE.value
+        )
+
+items.append(item)
+
+response = box.ai.create_ai_ask(mode=ai_mode, prompt="summarize this file", items=items, include_citations=True)
+
+answer = response.answer
+citations = response.citations
+
+for citation in citations:
+    content = citation.content
+    name = citation.name
+    id = citation.id
+    type = citation.type.value
+
+    print("+-------------------------------------------------------------------")
+    print(f"| name: {name}")
+    print(f"| id: {id}")
+    print(f"| type: {type}")
+    print("+-------------------------------------------------------------------")
+    print(f"{content}")
+    print("+-------------------------------------------------------------------\n\n\n")
+
+print(f"{answer}")
